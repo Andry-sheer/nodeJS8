@@ -1,4 +1,5 @@
 import express from "express";
+import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config()
 
@@ -9,6 +10,7 @@ const PORT = process.env.PORT || 3500;
 const API_BANK = process.env.API_BANK;
 
 app.use(express.json());
+app.use(morgan('dev'));
 
 app.use('/', homeRouter);
 

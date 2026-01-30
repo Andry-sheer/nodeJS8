@@ -3,19 +3,22 @@ import { fetch_currency } from "./get_currency.service.js";
 let cache_data = null;
 
 const set_cache = async () => {
-  const data = await fetch_currency();
-  const parseData = data.reduce((accum, think) => {
-    accum[think.ccy] = {
-      buy: think.buy,
-      sale: think.sale,
-    };
+  try {
+    const data = await fetch_currency();
+    const parseData = data.reduce((accum, think) => {
+      accum[think.ccy] = {
+        buy: think.buy,
+        sale: think.sale,
+      };
+      return accum;
+    }, {});
 
-    return accum;
-  }, {});
-
-  if (!cache_data) {
-    cache_data = parseData;
-    // console.log('CACHED DATA:', cache_data);
+    if (!cache_data) {
+      cache_data = parseData;
+      // console.log('CACHED DATA:', cache_data);
+    }
+  } catch (error) {
+    throw new Error('error setting cache...')
   }
 };
 

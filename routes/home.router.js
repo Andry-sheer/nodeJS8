@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 router.get("/currency", async (req, res) => {
   try {
     const data = await get_cache();
-    res.json(data);
+    res.status(200).json(data);
   } catch (error) {
     res.status(500).json({
       error: {
@@ -45,7 +45,7 @@ router.get("/currency/:current", async (req, res) => {
         },
       });
     } else {
-      res.json(valuta);
+      res.status(200).json(valuta);
     }
   } catch (error) {
     res.status(500).json({
