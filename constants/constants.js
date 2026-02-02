@@ -1,0 +1,1 @@
+export const API_BANK = 'https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5';
