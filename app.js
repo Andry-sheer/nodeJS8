@@ -2,15 +2,21 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 dotenv.config()
-
+import { connectMDB } from "./database/config.database.js";
+import { saveCurrency } from "./services/save_currency_db.service.js";
 import homeRouter from './routes/home.router.js';
+
+//! я створював у монго базу = restsdb і коллекцію = restapis
 
 const app = express();
 const PORT = process.env.PORT || 3500;
-const API_BANK = process.env.API_BANK;
 
 app.use(express.json());
 app.use(morgan('dev'));
+
+await connectMDB();
+
+await saveCurrency();
 
 app.use('/', homeRouter);
 

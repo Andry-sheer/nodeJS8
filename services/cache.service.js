@@ -1,21 +1,22 @@
-import { fetch_currency } from "./get_currency.service.js";
+import RestApiModel from "../models/RestApi.model.js";
 
 let cache_data = null;
 
 const set_cache = async () => {
   try {
-    const data = await fetch_currency();
-    const parseData = data.reduce((accum, think) => {
-      accum[think.ccy] = {
-        buy: think.buy,
-        sale: think.sale,
+    const data = await RestApiModel.find().limit(2);
+
+    const parseData = data.reduce((acc, item) => {
+      acc[item.valuta.ccy] = {
+        buy: item.valuta.buy,
+        sale: item.valuta.sale,
       };
-      return accum;
+      return acc;
     }, {});
 
     if (!cache_data) {
       cache_data = parseData;
-      // console.log('CACHED DATA:', cache_data);
+      // console.log('SET CACHED DATA:', cache_data);
     }
   } catch (error) {
     throw new Error('error setting cache...')
